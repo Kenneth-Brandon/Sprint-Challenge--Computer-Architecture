@@ -177,16 +177,33 @@ class CPU:
         self.op_helper("MUL")
 
     # SPRINT CHALLENGE
+    # CMP
+    # This is an instruction handled by the ALU.
+    # CMP registerA registerB
+    # Compare the values in two registers.
+    # If they are equal, set the Equal E flag to 1, otherwise set it to 0.
+    # If registerA is less than registerB, set the Less-than L flag to 1, otherwise set it to 0.
+    # If registerA is greater than registerB, set the Greater-than G flag to 1, otherwise set it to 0.
+
     def cmp(self):
         operand_a = self.ram[self.pc + 1]
         operand_b = self.ram[self.pc + 2]
         self.alu("CMP", operand_a, operand_b)
         self.pc += 3
 
+    # JMP
+    # JMP register
+    # Jump to the address stored in the given register.
+    # Set the PC to the address stored in the given register.
+
     def jmp(self):
         self.pc += 1
         given_register = self.ram[self.pc]
         self.pc = self.registers[given_register]
+
+    # JEQ
+    # JEQ register
+    # If equal flag is set(true), jump to the address stored in the given register.
 
     def jeq(self):
         given_register = self.ram[self.pc + 1]
@@ -194,6 +211,10 @@ class CPU:
             self.pc = self.registers[given_register]
         else:
             self.pc += 2
+
+    # JNE
+    # JNE register
+    # If E flag is clear(false, 0), jump to the address stored in the given register.
 
     def jne(self):
         given_register = self.ram[self.pc + 1]
